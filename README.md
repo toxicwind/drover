@@ -20,7 +20,7 @@
 **Drover** is the next-generation VS Code Insiders companion extension designed for local-first, low-latency, and high-performance AI-assisted engineering.
 
 Originally branched from ModelPilot and rebuilt for the Sovereign Ranch infrastructure, Drover combines:
-1. **Intelligent Model Routing & Failover**: Real-time prompt complexity scoring and routing across local llama-server herds (), NVIDIA NIM (), Groq, Cerebras, and OpenRouter with automatic zero-downtime hedging and failovers.
+1. **Intelligent Model Routing & Failover**: Real-time prompt complexity scoring and routing across local llama-server herds (`127.0.0.1:25100`), NVIDIA NIM (`127.0.0.1:25104`), Groq, Cerebras, and OpenRouter with automatic zero-downtime hedging and failovers.
 2. **Native Agent Client Protocol (ACP) Host**: Direct in-editor support for ACP, enabling any ACP-compatible agent (Copilot, Claude Code, Gemini CLI, Qwen Code, Codex, Tau) to communicate seamlessly via JSON-RPC.
 3. **Gemini EAP & Code Retrieval**: Deep context indexing and workspace grounding that ensures your coding models receive authoritative project syntax rather than hallucinated APIs.
 
@@ -35,7 +35,7 @@ Originally branched from ModelPilot and rebuilt for the Sovereign Ranch infrastr
 
 ### 2. Autonomous Herd Routing
 - **Latency-First Racing**: Race local llama-server instances and remote providers; first valid token stream wins, lagging requests are gracefully aborted.
-- **Zero-Configuration Defaults**: Automatically discovers active herd endpoints on  and .
+- **Zero-Configuration Defaults**: Automatically discovers active herd endpoints on `127.0.0.1:25100` and `127.0.0.1:25104`.
 - **Dynamic Context Optimization**: Automatic context-window sizing and token budgeting preventing truncation or OOMs.
 
 ### 3. Integrated Developer Workflow
@@ -47,8 +47,8 @@ Originally branched from ModelPilot and rebuilt for the Sovereign Ranch infrastr
 ## 📦 Installation & Setup
 
 ### Requirements
-- **VS Code Insiders** 
-- **Node.js**  or **Bun** 
+- **VS Code Insiders** `1.140.0+`
+- **Node.js** `18+` or **Bun** `1.1+`
 
 ### Quick Install in VS Code Insiders
 ```bash
