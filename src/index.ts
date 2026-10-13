@@ -1,19 +1,43 @@
-export * from './util/header';
+/**
+ * Drover Public API & Modular Exports
+ */
 export * from './models/registry';
-export * from './providers/nvidia';
-export * from './providers/openrouter';
-export * from './providers/groq';
-export * from './providers/cerebras';
-export * from './providers/google';
 export * from './util/helpers';
+export * from './providers/index';
 export * from './experts/profiles';
-export * from './util/helpers-mid';
 export * from './router/index';
-export * from './util/helpers-post';
-export * from './webviews/analytics';
-export * from './handlers/lm-provider';
-export * from './handlers/poll';
-export * from './handlers/chat';
-export * from './handlers/exec';
-export * from './handlers/activate';
-export * from './handlers/deactivate';
+export * from './acp/index';
+
+import { ModelRegistry } from './models/registry';
+import { ExpertEngine } from './experts/profiles';
+import { HerdRouter } from './router/index';
+import { ACPBridge } from './acp/index';
+import {
+  NvidiaProvider,
+  GroqProvider,
+  CerebrasProvider,
+  OpenRouterProvider,
+  LocalHerdProvider
+} from './providers/index';
+
+export function createDroverCore() {
+  const registry = new ModelRegistry();
+  const experts = new ExpertEngine(registry);
+  const providers = [
+    new NvidiaProvider(),
+    new GroqProvider(),
+    new CerebrasProvider(),
+    new OpenRouterProvider(),
+    new LocalHerdProvider()
+  ];
+  const router = new HerdRouter(providers);
+  const acp = new ACPBridge();
+
+  return {
+    registry,
+    experts,
+    providers,
+    router,
+    acp
+  };
+}
