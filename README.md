@@ -2,7 +2,7 @@
 
 <div align="center">
 
-**The Sovereign Herd Router & Autonomous Agent Client Protocol (ACP) Extension for VS Code Insiders**
+**The estate-scripts Herd Router & Autonomous Agent Client Protocol (ACP) Extension for VS Code Insiders**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE.txt)
 [![VS Code Insiders](https://img.shields.io/badge/VS%20Code-Insiders-blueviolet.svg)](https://code.visualstudio.com/insiders/)
@@ -19,7 +19,7 @@
 
 **Drover** is the next-generation VS Code Insiders companion extension designed for local-first, low-latency, and high-performance AI-assisted engineering.
 
-Originally branched from ModelPilot and rebuilt for the Sovereign Ranch infrastructure, Drover combines:
+Originally branched from ModelPilot and rebuilt for the estate-scripts Ranch infrastructure, Drover combines:
 1. **Intelligent Model Routing & Failover**: Real-time prompt complexity scoring and routing across local llama-server herds (`127.0.0.1:25100`), NVIDIA NIM (`127.0.0.1:25104`), Groq, Cerebras, and OpenRouter with automatic zero-downtime hedging and failovers.
 2. **Native Agent Client Protocol (ACP) Host**: Direct in-editor support for ACP, enabling any ACP-compatible agent (Copilot, Claude Code, Gemini CLI, Qwen Code, Codex, Tau) to communicate seamlessly via JSON-RPC.
 3. **Gemini EAP & Code Retrieval**: Deep context indexing and workspace grounding that ensures your coding models receive authoritative project syntax rather than hallucinated APIs.
@@ -53,7 +53,7 @@ Originally branched from ModelPilot and rebuilt for the Sovereign Ranch infrastr
 ### Quick Install in VS Code Insiders
 ```bash
 # Clone the repository
-git clone https://github.com/toxicwind/drover.git ~/.vscode-insiders/extensions/toxic.drover-1.0.0-sovereign
+git clone https://github.com/toxicwind/drover.git ~/.vscode-insiders/extensions/toxic.drover-1.0.0-estate-scripts
 
 # Reload VS Code Insiders
 code-insiders --list-extensions | grep drover
@@ -96,4 +96,4 @@ graph TD
 
 ## 📄 License
 
-MIT License © 2026 toxicwind & Sovereign Ranch Contributors.
+MIT License © 2026 toxicwind & estate-scripts Ranch Contributors.
