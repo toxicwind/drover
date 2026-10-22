@@ -2,7 +2,11 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "ES2022",
-    "lib": ["ES2022"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2022"
+    ],
     "outDir": "dist",
     "rootDir": "src",
     "sourceMap": true,
@@ -16,6 +20,12 @@
     "allowSyntheticDefaultImports": true,
     "useDefineForClassFields": false
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "dist", "sidecar"]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "sidecar"
+  ]
 }

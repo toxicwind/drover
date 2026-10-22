@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# drover — VSCode extension autonomous rig (bin/run).
+# Primary operation: compile the extension to dist/ via esbuild.
+# Usage: bin/run          (compile)
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+cmd_bun="$(readlink -f "$(command -v bun 2>/dev/null || true)" 2>/dev/null || true)"
+for cand in /home/toxic/.bun/bin/bun "$cmd_bun" /usr/local/bin/bun /usr/bin/bun; do
+  [ -x "$cand" ] && { REAL_BUN="$cand"; break; }
+done
+[ -n "${REAL_BUN:-}" ] || { echo "FAIL: bun not found"; exit 1; }
+
+echo "== drover run: compile extension (esbuild) =="
+"$REAL_BUN" run compile
+echo "OK: drover compiled"

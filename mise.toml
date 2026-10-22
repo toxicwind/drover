@@ -1,0 +1,8 @@
+# drover — autonomous rig task wiring (Phase-B).
+# bin/run = compile; bin/check = typecheck + test gate.
+
+[tasks]
+run = "./bin/run"
+check = "./bin/check"
+validate = "bun run validate"
+compile = "bun run compile"
