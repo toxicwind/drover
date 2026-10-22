@@ -1,0 +1,6 @@
+# drover (extensions/drover slice) — autonomous rig task wiring (Phase-B).
+
+[tasks]
+run = "./bin/run"
+check = "./bin/check"
+compile = "bun run compile"

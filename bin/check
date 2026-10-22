@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# drover (extensions/drover slice) — VSCode extension autonomous rig (bin/check).
+# Self-test gate (PASS / FAIL): typecheck + test suite.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+echo "== drover extensions check: start =="
+cmd_bun="$(readlink -f "$(command -v bun 2>/dev/null || true)" 2>/dev/null || true)"
+for cand in /home/toxic/.bun/bin/bun "$cmd_bun" /usr/local/bin/bun /usr/bin/bun; do
+  [ -x "$cand" ] && { REAL_BUN="$cand"; break; }
+done
+[ -n "${REAL_BUN:-}" ] || { echo "FAIL: bun not found"; exit 1; }
+
+echo "-- typecheck --"
+if ! "$REAL_BUN" run typecheck; then echo "FAIL: typecheck"; exit 1; fi
+echo "OK: typecheck"
+
+echo "-- test --"
+out="$("$REAL_BUN" test 2>&1)"
+echo "$out" | grep -iE "[0-9]+ pass|[0-9]+ fail|Ran [0-9]+" | tail -3
+if echo "$out" | grep -qE "[1-9][0-9]* fail"; then echo "FAIL: tests"; exit 1; fi
+echo "OK: tests"
+
+echo "== drover extensions check: PASS =="
