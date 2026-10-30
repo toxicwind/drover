@@ -1,4 +1,5 @@
 node_modules/
+dist/
 sidecar/node_modules/
 sidecar/dist/
 *.vsix

@@ -1,0 +1,23 @@
+{
+  "product": "drover",
+  "path": "/home/toxic/pens/ranch/products/drover",
+  "files": 33,
+  "detected_at": "2026-10-30T06:11:06.475600Z",
+  "env_vars": {
+    "GEMINI_API_KEY": [
+      "sidecar/src/sidecar.ts"
+    ],
+    "GOOGLE_API_KEY": [
+      "sidecar/src/sidecar.ts"
+    ],
+    "errText": [
+      "src/providers/index.ts"
+    ],
+    "provider": [
+      "src/models/registry.ts"
+    ],
+    "workspaceFolder": [
+      ".vscode/mcp.json"
+    ]
+  }
+}

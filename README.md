@@ -1,99 +1,46 @@
-# 🤠 Drover
+# Drover — Herd Router VS Code Extension
 
-<div align="center">
+> 🗺️ Part of [**the ranch**](https://github.com/toxicwind/ranch) — the whole inference estate, one map.
 
-**The estate-scripts Herd Router & Autonomous Agent Client Protocol (ACP) Extension for VS Code Insiders**
+VS Code extension for herd-level model routing with Gemini EAP tool retrieval.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE.txt)
-[![VS Code Insiders](https://img.shields.io/badge/VS%20Code-Insiders-blueviolet.svg)](https://code.visualstudio.com/insiders/)
-[![ACP Compatible](https://img.shields.io/badge/Protocol-ACP%20v1-success.svg)](https://agentclientprotocol.com)
-[![Status: Production](https://img.shields.io/badge/Status-Maximal-brightgreen.svg)]()
+## Structure
 
-*Intelligent Model Routing · Multi-Provider Herd Access · Agent Client Protocol (ACP) · Gemini EAP Retrieval*
+- `drover-1.0.0-estate-scripts.vsix` — working built extension (installable)
+- `sidecar/` — Gemini EAP tool-retrieval sidecar (real source, builds clean)
+  - `src/sidecar.ts` — LM Chat Provider using `interactions.create` with `tool_search`
+  - Builds to `dist/sidecar.js` via `node esbuild.js`
 
-</div>
+## Note on source
 
----
+The original `src/` contained only minified/decompiled fragments (not rebuildable).
+They were removed. The `.vsix` is the canonical working artifact. A proper
+source rebuild is future work — the sidecar is the actively maintained piece.
 
-## 🌟 Overview
+## Build
 
-**Drover** is the next-generation VS Code Insiders companion extension designed for local-first, low-latency, and high-performance AI-assisted engineering.
+```sh
+# Main extension (from vsix — no source rebuild available)
+code-insiders --install-extension drover-1.0.0-estate-scripts.vsix --force
 
-Originally branched from ModelPilot and rebuilt for the estate-scripts Ranch infrastructure, Drover combines:
-1. **Intelligent Model Routing & Failover**: Real-time prompt complexity scoring and routing across local llama-server herds (`127.0.0.1:25100`), NVIDIA NIM (`127.0.0.1:25104`), Groq, Cerebras, and OpenRouter with automatic zero-downtime hedging and failovers.
-2. **Native Agent Client Protocol (ACP) Host**: Direct in-editor support for ACP, enabling any ACP-compatible agent (Copilot, Claude Code, Gemini CLI, Qwen Code, Codex, Tau) to communicate seamlessly via JSON-RPC.
-3. **Gemini EAP & Code Retrieval**: Deep context indexing and workspace grounding that ensures your coding models receive authoritative project syntax rather than hallucinated APIs.
-
----
-
-## 🚀 Key Features
-
-### 1. Unified ACP Agent Control Surface
-- **Multi-Agent Management**: Connect, steer, and manage multiple coding agents directly from the sidebar.
-- **Traffic Logging & Inspection**: Real-time transparency into every JSON-RPC 2.0 exchange between the editor and the agent.
-- **Permission Boundary Sandboxing**: Enforces workspace boundary protections so autonomous agents never mutate untrusted trees without explicit consent.
-
-### 2. Autonomous Herd Routing
-- **Latency-First Racing**: Race local llama-server instances and remote providers; first valid token stream wins, lagging requests are gracefully aborted.
-- **Zero-Configuration Defaults**: Automatically discovers active herd endpoints on `127.0.0.1:25100` and `127.0.0.1:25104`.
-- **Dynamic Context Optimization**: Automatic context-window sizing and token budgeting preventing truncation or OOMs.
-
-### 3. Integrated Developer Workflow
-- **Inline Code Editing & Diff Application**: Native tree manipulation, multi-file atomic patches, and symbol-level navigation.
-- **Command Palette Integration**: Fast triggers for agent connections, turn cancellation, prompt replay, and model profile swapping.
-
----
-
-## 📦 Installation & Setup
-
-### Requirements
-- **VS Code Insiders** `1.140.0+`
-- **Node.js** `18+` or **Bun** `1.1+`
-
-### Quick Install in VS Code Insiders
-```bash
-# Clone the repository
-git clone https://github.com/toxicwind/drover.git ~/.vscode-insiders/extensions/toxic.drover-1.0.0-estate-scripts
-
-# Reload VS Code Insiders
-code-insiders --list-extensions | grep drover
+# Sidecar (real source)
+cd sidecar && node esbuild.js
 ```
 
----
+The main build entry is `scripts/mise-build.sh`. It runs the canonical build
+locally through mise; eligible task artifacts restore through mbx-cache:
 
-## ⚙️ Configuration
-
-Drover integrates cleanly into your VS Code `settings.json`:
-
-```json
-{
-  "drover.approvalMode": "default",
-  "drover.autoGenerateCommitMessageOnSave": true,
-  "drover.streamResponses": true,
-  "drover.local.baseUrl": "http://127.0.0.1:25100/v1",
-  "drover.nimlocal.baseUrl": "http://127.0.0.1:25104/v1",
-  "acp.autoApprovePermissions": false,
-  "acp.logTraffic": true
-}
+```sh
+./scripts/mise-build.sh
 ```
 
----
+The build copies the tree to a temp dir first: the ranch root `package.json`
+declares a `corral` workspace with no `package.json` on disk, so `bun install`
+run from `drover/` walks up to the root and fails. The sidecar
+(`sidecar/src/sidecar.ts` → `dist/sidecar.js` via `node esbuild.js`) is the
+actively maintained build; the root `compile` script is unwirable (`src/` was
+removed, see note above).
 
-## 🛠️ Architecture
+## Monorepo
 
-```mermaid
-graph TD
-    UI[VS Code Insiders Editor] -->|Commands & Webview| Drover[Drover Core]
-    Drover -->|JSON-RPC over stdio| ACP[Agent Client Protocol Host]
-    Drover -->|Fast Token Race| Router[Herd Model Router]
-    Router -->|HTTP / OpenAI API| LocalHerd[Local Herd :25100]
-    Router -->|HTTP / OpenAI API| NIM[NVIDIA NIM :25104]
-    Router -->|Fallback| Cloud[Groq / Cerebras / OpenRouter]
-    ACP -->|Agent Protocol| Agents[Claude Code / Copilot / Tau Agent]
-```
-
----
-
-## 📄 License
-
-MIT License © 2026 toxicwind & estate-scripts Ranch Contributors.
+Part of the ranch monorepo. See `../package.json` for workspace config.
